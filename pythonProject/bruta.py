@@ -4,7 +4,7 @@ import mouse
 import pyautogui as pg
 import textract
 coordinates = None
-regiao = (500,950,1000,200)
+
 ativo = True
 Loop = True
 pg.PAUSE = 0.1
@@ -50,13 +50,35 @@ def compra():
     mouse.click()
 
 
-def dinheiro():
-    image =  pg.screenshot(region=(340, 980, 25, 25))
-    image.save("screenshot.png")
-    print(textract.process("screenshot.png"))
+# def dinheiro():
+    # image =  pg.screenshot(region=(340, 980, 25, 25))
+    # image.save("screenshot.png")
+    # print(textract.process("screenshot.png"))
+def definirRegiao1():
+    comeco = []
+    while True:
+        if keyboard.is_pressed("q"):
+            comeco = pg.position()
+            print("Feito 1")
+            break
+    return comeco
+def definirRegiao2():
+    final = []
+    while True:
+        if keyboard.is_pressed("w"):
+            final = pg.position()
+            print("Feito 2")
+            break
+
+    return final
+#Defini a regiao que irá interagir
+comecoreal = definirRegiao1()
+finalreal = definirRegiao2()
+regiao = (comecoreal[0],comecoreal[1], finalreal[0] -comecoreal[0] , finalreal[1] -comecoreal[1])
+
 while(ativo):
     if(keyboard.read_key() == 'y'):
-      compra()
+        compra()
     if(keyboard.read_key() == 'i'):
         print("ta aq")
         break
