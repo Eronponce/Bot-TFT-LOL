@@ -1,34 +1,38 @@
-import csv
+import keyboard
 import time
 import pyautogui as pg
 i = 0
 condicao = 0
+pg.PAUSE = 0.1
 
-with open("./Frases.csv", 'r') as file:
-  csvreader = csv.reader(file)
-  for i in range(1000):
-    condicao = 0
-    while condicao != 30 :
-        try:
-            coordinates = pg.locateOnScreen('bruiser.png', confidence = 0.5)
-            print(coordinates)
-            cor = pg.pixel(int(coordinates[0])+20,int(coordinates[1])+20)
-            if cor == (245, 245, 245):
-                pg.click(coordinates[0] + 20, coordinates[1] + 20)
-                time.sleep(1)
-            else:
-                condicao = condicao + 1
-        except:
-            print("nao encontrado")
-            condicao = condicao + 1
 
-        pg.scroll(-200)
-        time.sleep(1)
+def definirRegiao1():
+    comeco = []
+    while True:
+        if keyboard.is_pressed("q"):
+            comeco = pg.position()
+            print("Feito 1")
+            break
+    return comeco
+def definirRegiao2():
+    final = []
+    while True:
+        if keyboard.is_pressed("w"):
+            final = pg.position()
+            print("Feito 2")
+            break
 
+    return final
+comecoreal = definirRegiao1()
+finalreal = definirRegiao2()
+regiao = (comecoreal[0],comecoreal[1], finalreal[0] - comecoreal[0] , finalreal[1] -comecoreal[1])
+print(regiao)
+for i in range(1000):
+
+    coordinates = pg.locateOnScreen('like.png',region=regiao,confidence = 0.9)
+    print(coordinates)
+    if (coordinates != None):
+        print(coordinates)
+        pg.click(coordinates[0] + 20, coordinates[1] + 20)
+    pg.scroll(-150)
     time.sleep(1)
-    pg.click(325, 16)
-    time.sleep(1)
-    pg.click(1270, 125)
-    time.sleep(1)
-    pg.click(1635, 208)
-    time.sleep(7)
